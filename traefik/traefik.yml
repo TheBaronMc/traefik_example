@@ -1,0 +1,55 @@
+################################################################
+# Global configuration
+################################################################
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: true
+
+################################################################
+# EntryPoints configuration
+################################################################
+
+entryPoints:
+  web:
+    address: :80
+
+  websecure:
+    address: :443
+
+################################################################
+# API and dashboard configuration
+################################################################
+
+api:
+  # Enable the API in insecure mode
+  insecure: true
+
+  # Enabled Dashboard
+  dashboard: true
+
+################################################################
+# Docker configuration backend
+################################################################
+
+providers:
+  # Enable Docker configuration backend
+  docker:
+    # Docker server endpoint. Can be a tcp or a unix socket endpoint.
+    endpoint: "unix:///var/run/docker.sock"
+
+    # Default host rule.
+    defaultRule: Host(`{{ normalize .Name }}.docker.localhost`)
+
+    # Expose containers by default in traefik
+    exposedByDefault: false
+ 
+################################################################
+# Expose Metrics
+################################################################
+
+metrics:
+  prometheus: 
+    entryPoint: web
+    addEntryPointsLabels: true
+    addRoutersLabels: true
+    addServicesLabels: true
